@@ -29,9 +29,9 @@ public class LoginScenarioPassedAndFailed extends LoginBasics {
         return new Object[][]{
                 {"meyaj38923@pofmagic.com", "12345Aa@", true}, // Scénario valide
                 {"fif", "2345678@Aa", false},  // Email et mot de passe incorrectes
-                {"", "12345Aa@", false},    // Champ email vide
-                {"meyaj38923@pofmagic.com", "", false},           // Champ mot de passe vide
-                {"", "", false}                 // champ email et mot de passes vides
+                {"<empty_email>", "12345Aa@", false},    // Champ email vide
+                {"meyaj38923@pofmagic.com", "<empty_password>", false},           // Champ mot de passe vide
+                {"<empty_email>", "<empty_password>", false}                 // champ email et mot de passes vides
         };
     }
 
@@ -71,23 +71,37 @@ public class LoginScenarioPassedAndFailed extends LoginBasics {
                 wait.until(ExpectedConditions.elementToBeClickable(Email_Button));
                 takeScreenshot("logout_success_" + email);
                 System.out.println("Déconnexion réussie après connexion.");
+
             } else {
                 // Si connexion échouée, vérifier qu'un message d'erreur apparaît
-                wait.until(ExpectedConditions.elementToBeClickable(Errormessage_Button));
+                WebElement errormessage = wait.until(ExpectedConditions.elementToBeClickable(Errormessage_Button));
+                Assert.assertTrue(errormessage.isDisplayed(), "le message d'erreur n'est pas affiché dans le cas d'authentification invalide");
                 takeScreenshot("login_failure_" + email);
-                System.out.println("Connexion échouée avec l'email : " + email);
-                Assert.fail("Connexion échouée comme attendu pour : " + email);
+                System.out.println("La connexion a échoué comme prévu pour l'e-mail : " + email);
+                System.out.println("La connexion a échoué comme prévu pour le mot de passe :" + password);
             }
 
         } catch (Exception e) {
             takeScreenshot("error_" + email);
             System.err.println("Erreur lors de la tentative de connexion : " + e.getMessage());
+            if (expected) {
+                Assert.fail("Erreur inattendue lors d'un scénario de connexion valide.");
+            } else {
+                Assert.fail("Erreur inattendue lors d'un scénario de connexion invalide.");
+            }
         }
     }
 
     private void takeScreenshot(String screenshotName) {
+        String sanitizedScreenshotName = screenshotName.replaceAll("[^a-zA-Z0-9_-]", "_");
+        if (sanitizedScreenshotName.isEmpty()) {
+            sanitizedScreenshotName = "default_screenshot";
+        }
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        String finalScreenshotName = sanitizedScreenshotName + "_" + timestamp;
+
         String screenshotDirectory = "screenshots";
-        String screenshotPath = screenshotDirectory + "/" + screenshotName + ".png";
+        String screenshotPath = screenshotDirectory + "/" + finalScreenshotName + ".png";
 
         try {
             File srcFile = driver.getScreenshotAs(OutputType.FILE);
