@@ -17,7 +17,7 @@ public class LoginScenarioPassedAndFailed extends LoginBasics {
     private static final By Email_Button = AppiumBy.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText[1]");
     private static final By Password_Button = AppiumBy.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText[2]");
     private static final By Login1_Button = AppiumBy.xpath("//android.widget.TextView[@text=\"Login\"]");
-    private static final By Check_Button = AppiumBy.xpath("(//android.view.ViewGroup[@resource-id=\"card\"])[1]/android.view.ViewGroup");
+    private static final By Check_Button = AppiumBy.xpath("//android.widget.TextView[@resource-id=\"header-title\"]");
     private static final By SideBar_Button = AppiumBy.xpath("//android.view.ViewGroup[@resource-id=\"cross-fade-icon-current\"]/com.horcrux.svg.SvgView/com.horcrux.svg.GroupView/com.horcrux.svg.PathView");
     private static final By logout_Button = AppiumBy.xpath("//android.widget.TextView[@text=\"Logout\"]");
     private static final By Errormessage_Button = AppiumBy.xpath("//android.widget.TextView[@text=\"Wrong credential\"]");
