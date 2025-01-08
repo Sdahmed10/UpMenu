@@ -24,7 +24,7 @@ public class LoginBasics {
         // Définit le framework d'automatisation à utiliser (UiAutomator2 pour Android).
         caps.setCapability("appium:automationName", "UiAutomator2");
         // Indique la version du système d'exploitation Android de l'appareil ou de l'émulateur.
-        caps.setCapability("appium:platformVersion", "14");
+        caps.setCapability("appium:platformVersion", "13");
         // Spécifie le nom de l'appareil ou de l'émulateur utilisé pour le test.
         caps.setCapability("appium:deviceName", "emulator-5554");
         // Indique le chemin absolu vers l'application (.apk) à tester.
