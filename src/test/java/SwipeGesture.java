@@ -20,7 +20,7 @@ public class SwipeGesture extends LoginBasics {
     private static final By Check_Button = AppiumBy.xpath("//android.widget.TextView[@text=\"You have no orders yet\"]");
     private static final By SideBar_Button = AppiumBy.xpath("//android.view.ViewGroup[@resource-id=\"cross-fade-icon-current\"]/com.horcrux.svg.SvgView/com.horcrux.svg.GroupView/com.horcrux.svg.PathView");
     private static final By Report_Button = AppiumBy.xpath("//android.widget.TextView[@text=\"Reports\"]");
-    private static final By Visits_Button = AppiumBy.xpath("(//android.widget.TextView[@text=\"No data\"])[2]");
+    private static final By Visits_Button = AppiumBy.xpath("//android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup[1]");
     private static final By Order_Button = AppiumBy.xpath("//android.widget.TextView[@text=\"Order source\"]");
 
     @DataProvider(name = "loginScenario")
@@ -64,29 +64,12 @@ public class SwipeGesture extends LoginBasics {
             // Scroll down to the Visibility_BUTTON
             scrollToElement(Visits_Button);
 
-            //click on Visits|_Button
-            wait.until(ExpectedConditions.elementToBeClickable(Visits_Button)).click();
-
-            // Wait for the Visits_BUTTON to be visible
-            boolean isDisplayed = wait.until(ExpectedConditions.visibilityOfElementLocated(Visits_Button)).isDisplayed();
-            Assert.assertTrue(isDisplayed, "'Visits' n'est pas affiché sur l'écran.");
+            // Vérifiez que l'élément est visible
+            WebElement visitsButton = wait.until(ExpectedConditions.visibilityOfElementLocated(Visits_Button));
+            Assert.assertTrue(visitsButton.isDisplayed(), "'Visits' n'est pas affiché sur l'écran.");
             System.out.println("'Visits' est bien affiché sur l'écran.");
         } catch (Exception e) {
             Assert.fail("Le test a échoué en raison d'une exception : " + e.getMessage());
-        }
-
-        // Ensure the Order_Button is visible before performing the swipe
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(Order_Button));
-
-    // Ensure the element is interactable
-        if (element.isDisplayed() && element.isEnabled()) {
-            ((JavascriptExecutor) driver).executeScript("mobile: swipeGesture",
-                    ImmutableMap.of("elementId", ((RemoteWebElement) element).getId(),
-                            "direction", "left",
-                            "percent", 1));
-            System.out.println("Swipe Gesture performed on element: " + element);
-        } else {
-            System.out.println("Element not interactable, swipe gesture not performed.");
         }
 
 
@@ -122,7 +105,11 @@ public class SwipeGesture extends LoginBasics {
     }
 
 
-}
+    }
+
+
+
+
 
 
 

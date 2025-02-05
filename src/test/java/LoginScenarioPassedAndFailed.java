@@ -21,6 +21,7 @@ public class LoginScenarioPassedAndFailed extends LoginBasics {
     private static final By SideBar_Button = AppiumBy.xpath("//android.view.ViewGroup[@resource-id=\"cross-fade-icon-current\"]/com.horcrux.svg.SvgView/com.horcrux.svg.GroupView/com.horcrux.svg.PathView");
     private static final By logout_Button = AppiumBy.xpath("//android.widget.TextView[@text=\"Logout\"]");
     private static final By Errormessage_Button = AppiumBy.xpath("//android.widget.TextView[@text=\"Wrong credential\"]");
+    private static final By Close_Button = AppiumBy.xpath("//android.widget.TextView[@text=\"\uE5CD\"]");
 
     //annotation utilisée dans TestNG pour fournir des données de test à une méthode de test.
     //Elle permet d'exécuter une même méthode de test plusieurs fois avec des ensembles de données différents
@@ -38,6 +39,8 @@ public class LoginScenarioPassedAndFailed extends LoginBasics {
     @Test(dataProvider = "loginScenarios")
     public void loginScenario(String email, String password, boolean expected) {
         try {
+            WebElement close = wait.until(ExpectedConditions.elementToBeClickable(Close_Button));
+            close.click();
             // Remplir le champ email
             WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(Email_Button));
             emailField.click();
